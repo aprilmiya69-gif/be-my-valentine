@@ -3,128 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Cutu Baby</title>
+    <title>Be My Valentine?</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #ffcad4;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            overflow: hidden;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            text-align: center;
-            width: 350px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .gf-img {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            border: 4px solid #ff4d6d;
-        }
-
-        h1 {
-            color: #ff4d6d;
-            font-size: 1.4rem;
-            margin-bottom: 20px;
-        }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            height: 50px;
-            position: relative;
-        }
-
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #noBtn {
-            background-color: #8a8a8a;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            position: absolute;
-            cursor: pointer;
-            transition: 0.1s ease;
-        }
-
-        #success-page {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: white;
-            z-index: 100;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .panda-gif {
-            width: 250px;
-        }
+        body { text-align: center; font-family: 'Arial', sans-serif; background-color: #ffe6e6; }
+        .container { margin-top: 50px; }
+        img { width: 300px; border-radius: 15px; margin-bottom: 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+        h1 { color: #ff4d4d; }
+        .buttons { margin-top: 30px; position: relative; height: 100px; }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 10px; border: none; transition: 0.3s; }
+        #yesButton { background-color: #ff4d4d; color: white; }
+        #noButton { background-color: #cccccc; color: black; position: absolute; }
     </style>
 </head>
 <body>
+    <audio id="vibeMusic" loop>
+        <source src="https://docs.google.com/uc?export=open&id=1e7RaDC7UmDtJSGUszGA2tB_6sBnk3QkH" type="audio/mpeg">
+    </audio>
 
-    <div class="card" id="askCard">
-        <img src="gf.jpg" class="gf-img" alt="My Girl">
-        <h1>Hey Cutu Baby, will u be my Valentine?</h1>
-        
-        <div class="btn-container">
-            <button id="yesBtn" onclick="showSuccess()">YES!</button>
-            <button id="noBtn" onmouseover="moveNoButton()">NO</button>
+    <div class="container">
+        <img id="mainImage" src="gf.jpg" alt="Your Photo">
+        <h1 id="question">Will you be my Valentine, Cutu Baby? ❤️</h1>
+        <div class="buttons">
+            <button id="yesButton" onclick="acceptInvitation()">Yes!</button>
+            <button id="noButton" onmouseover="moveButton()">No</button>
         </div>
     </div>
 
-    <div id="success-page">
-        <img src="panda.gif" alt="Happy Panda" class="panda-gif">
-        <h1 style="color: #ff4d6d; font-size: 2rem;">YAY! So happy! <br> You’re the best Valentine ever! ❤️</h1>
-    </div>
-
     <script>
-        function moveNoButton() {
-            const btn = document.getElementById('noBtn');
-            const maxX = window.innerWidth - btn.offsetWidth;
-            const maxY = window.innerHeight - btn.offsetHeight;
-            
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-            
-            btn.style.left = randomX + 'px';
-            btn.style.top = randomY + 'px';
-            btn.style.position = 'fixed'; 
+        const music = document.getElementById('vibeMusic');
+
+        function startMusic() {
+            music.play().catch(error => console.log("Autoplay blocked, waiting for interaction."));
         }
 
-        function showSuccess() {
-            document.getElementById('askCard').style.display = 'none';
-            document.getElementById('success-page').style.display = 'flex';
+        function moveButton() {
+            startMusic(); // Music starts when she tries to click No
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 100);
+            const noBtn = document.getElementById('noButton');
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        function acceptInvitation() {
+            startMusic(); // Music starts if she clicks Yes
+            document.getElementById('question').innerHTML = "Yay! I love you so much! ❤️";
+            document.getElementById('mainImage').src = "panda.gif";
+            document.querySelector('.buttons').style.display = "none";
         }
     </script>
 </body>
